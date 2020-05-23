@@ -1,27 +1,30 @@
 import React, {useEffect, useState} from 'react';
-import socket from '../../service/socket';
+import {sendMessage, bin2String} from '../../service/socket';
 import {View} from 'react-native';
-import {Text} from 'react-native-elements';
+import {Button} from 'react-native-elements';
+import {useHistory} from 'react-router-native';
+import socket from '../../service/socket';
 
 export default function Start() {
-  const [questions, setQuestions] = useState();
+  const history = useHistory();
 
   useEffect(() => {
-    const data = 'New connection!';
-    socket.send(data, 0, data.length, 41234, 'localhost', function (err) {
-      if (err) {
-        setQuestions(err);
+    socket.on('message', (msg) => {
+      const obj = bin2String(msg);
+      console.log(obj);
+      const message = JSON.parse(obj);
+
+      if (message.req === 'questions') {
+        sendMessage('ack');
+        history.push('/questions', message.res);
       }
     });
   }, []);
 
-  if (!questions) {
-    return <View />;
-  }
-
   return (
     <View>
-      <Text>{questions}</Text>
+      <Button title="Enviar Oi" onPress={() => sendMessage('questions')} />
+      <Button title="Voltar" onPress={() => history.goBack()} />
     </View>
   );
 }
