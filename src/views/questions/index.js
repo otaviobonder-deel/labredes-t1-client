@@ -32,6 +32,7 @@ export default function Questions({}) {
       <View>
         {Object.keys(questions[currentQuestion].alternatives).map(key => (
           <TouchableOpacity
+            key={key}
             style={{
               margin: 20,
               backgroundColor: 'blue',
@@ -60,11 +61,6 @@ export default function Questions({}) {
     return score;
   };
 
-  const resetGame = () => {
-    setCurrentQuestion(0);
-    setPlayerAnswers([]);
-  }
-
   const renderFinal = () => (
     <View>
       <Text
@@ -91,7 +87,7 @@ export default function Questions({}) {
           display: 'flex',
           alignItems: 'center'
         }}
-        onPress={() => resetGame()}
+        onPress={() => history.push('/start')}
       >
         <Text
           style={{
