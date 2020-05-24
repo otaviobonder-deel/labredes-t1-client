@@ -23,7 +23,7 @@ export default function Start() {
 
   return (
     <View>
-      <Button title="Enviar Oi" onPress={() => sendMessage('questions')} />
+      <Button title="Comecar" onPress={() => sendMessage('questions')} />
       <Button title="Voltar" onPress={() => history.goBack()} />
     </View>
   );
