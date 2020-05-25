@@ -21,7 +21,7 @@ export function sendMessage(req) {
     0,
     messageInArray.length,
     41234,
-    'localhost',
+    '192.168.0.33',
     function (err) {
       if (err) throw err;
     },
